@@ -1,22 +1,20 @@
-import { request } from "http";
-import { App, Modal } from "obsidian";
+import { request } from "https";
+import { App, Modal, Notice } from "obsidian";
 
 export class LawPreview extends Modal {
-  context: string;
-  constructor(app: App, context: string) {
+  paragraph: string;
+  book: string;
+  constructor(app: App, paragraph: string, book: string) {
     super(app);
-    this.context = context;
+    this.paragraph = paragraph;
+    this.book = book;
   }
 
   async onOpen() {
     let { contentEl } = this;
     contentEl.setText("Loading your law preview...");
 
-    let book = this.context.split("§")[1].split(" ")[0];
-    book = book.toLowerCase();
-    let paragraph = this.context.split("§")[1].split(/[\s,]+/)[1];
-
-    let url = `http://www.gesetze-im-internet.de/${book}/__${paragraph}.html`;
+    let url = `https://www.gesetze-im-internet.de/${this.book}/__${this.paragraph}.html`;
 
     console.log(url);
 
@@ -34,7 +32,7 @@ export class LawPreview extends Modal {
         // get content
         let content = htmlDoc.getElementsByClassName("jurAbsatz")[0];
         contentEl.empty();
-        contentEl.appendChild(new DOMParser().parseFromString("<h1>§" + book.toUpperCase() + " " + paragraph +"</h1>", "text/html").body);
+        contentEl.appendChild(new DOMParser().parseFromString("<h1>§" + this.book.toUpperCase() + " " + this.paragraph +"</h1>", "text/html").body);
         contentEl.appendChild(content);
       });
     });

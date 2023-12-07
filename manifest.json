@@ -1,9 +1,9 @@
 {
 	"id": "obsidian-law-linking",
 	"name": "Law Linking",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "This plugin previews paragraphs (for example §BGB 1)",
+	"description": "This plugin previews german paragraphs (for example §101 BGB)",
 	"author": "lapesi",
 	"authorUrl": "lape.si",
 	"fundingUrl": "lape.si/donate",

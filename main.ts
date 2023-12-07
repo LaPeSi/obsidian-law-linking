@@ -13,7 +13,7 @@ export default class LawPlugin extends Plugin {
 			const content = await this.app.vault.read(file);
 			// check if file contains §
 			if (content) {
-				const regex = /(^| )(§[a-zA-Z]+ [0-9]+)/gm;
+				const regex = /(^| )(§ [0-9]+ [a-zA-Z]+)/gm;
 				// output amount of regex matches
 				new Notice('Replaced ' + (content.match(regex)?.length ? content.match(regex)?.length : 0));
 				// replace § with link
@@ -35,22 +35,27 @@ export default class LawPlugin extends Plugin {
 			const target = evt.target as HTMLElement;
 			// check if Target contains §
 			if (target.innerText.includes('§')) {
-				// if target mathes § [a-zA-Z]* [0-9]* open modal
-				if(target.innerText.match(/§[a-zA-Z]+ [0-9]+/gm)) {
+				// if target mathes accepted § format show modal
+				if (target.innerText.match(/§ [0-9]+ [a-zA-Z]+/gm) && target.innerText.split('§')[1].split(' ')[2] != "Abs.") {
+					let book = target.innerText.split('§')[1].split(' ')[2];
+					book = book.toLowerCase();
+					let paragraph = target.innerText.split('§')[1].split(' ')[1];
 					// show modal
-					new LawPreview(this.app, target.innerText).open();
+					if (book && paragraph)
+						new LawPreview(this.app, paragraph, book).open();
 				}
 				else {
-					// scan for other § matches in children from same parent
+					// scan for other § matches in children from same parent (for example if in preview and you click on nested §)
 					const children = target.parentElement?.children;
 					if (children) {
 						for (let i = 0; i < children.length; i++) {
 							const child = children[i];
 							if (child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)) {
 								// show modal
-								const book = child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)?.[0].split('§')[1].split(' ')[0];
+								const book = child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)?.[0].split('§')[1].split(' ')[0].toLowerCase();
 								const paragraph = target.innerText.split('§')[1].split(/[\s,]+/)[1];
-								new LawPreview(this.app, '§' + book + ' ' + paragraph).open();
+								if (book && paragraph)
+									new LawPreview(this.app, paragraph, book).open();
 								return;
 							}
 						}
@@ -68,9 +73,10 @@ export default class LawPlugin extends Plugin {
 								const child = children[i];
 								if (child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)) {
 									// show modal
-									const book = child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)?.[0].split('§')[1].split(' ')[0];
+									const book = child.innerHTML.match(/§[a-zA-Z]+ [0-9]+/gm)?.[0].split('§')[1].split(' ')[0].toLowerCase();
 									const paragraph = target.innerText.split('§')[1].split(/[\s,]+/)[1];
-									new LawPreview(this.app, '§' + book + ' ' + paragraph).open();
+									if (book && paragraph)
+										new LawPreview(this.app, paragraph, book).open();
 									return;
 								}
 							}
