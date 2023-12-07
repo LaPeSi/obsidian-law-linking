@@ -6,6 +6,8 @@ This plugin lets you preview german laws in obsidian. It uses www.gesetze-im-int
 
 - Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-law-linking/`.
 
+Check out the [latest release](https://github.com/LaPeSi/obsidian-law-linking/releases/latest).
+
 ## How to use
 Write for example `$ 101 BGB` anywhere in your note and press `ctrl+R` to let the plugin scan for laws.
 You can also press `ctrl+P` and type `Refresh Law Links` to manually scan for laws.
