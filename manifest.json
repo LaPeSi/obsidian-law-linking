@@ -3,7 +3,7 @@
 	"name": "Law Linking",
 	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "This plugin previews german paragraphs (for example §101 BGB)",
+	"description": "This plugin previews german paragraphs (for example § 101 BGB)",
 	"author": "lapesi",
 	"authorUrl": "lape.si",
 	"fundingUrl": "lape.si/donate",
